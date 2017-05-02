@@ -1,5 +1,5 @@
 #!/bin/bash
-PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
+
 ### BEGIN INIT INFO
 # Provides:          start-jupyter
 # Required-Start:    $remote_fs $syslog
@@ -8,20 +8,26 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
 # Default-Stop:      0 1 6
 # Short-Description: Start Jupyter Notebook's service
 # Description:       Executes jupyter notebook in background.
-### END INIT INFO   Startup script for Linux-based systems for Executes jupyter notebook in background
+### END INIT INFO
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
+DESC="Start Jupyter notebook server as a service"
+DAEMON=/usr/local/bin/jupyter-notebook
+DAEMON_ARGS="--no-browser --notebook-dir='~/jupyter-nodebook/' --config=~/.jupyter/jupyter_notebook_config.py"
+
 case $1 in
     start)
         echo "Starting script jupyter-notebook "
-        /home/jupyter-nodebook/env/bin/jupyter-notebook notebook --no-browser --notebook-dir='/home/jupyter-nodebook/' --config='~/.jupyter/jupyter_notebook_config.py' >
+        $DAEMON $DAEMON_ARGS
     ;;
     stop)
         echo "Stopping script jupyter-notebook "
-        /home/jupyter-nodebook/env/bin/jupyter-notebook stop
+        $DAEMON stop
     ;;
     restart)
         echo "Restarting jupyter-notebook "
-        /home/jupyter-nodebook/env/bin/jupyter-notebook stop
-        /home/jupyter-nodebook/env/bin/jupyter-notebook --no-browser --notebook-dir='/home/jupyter-nodebook/'  --config='~/.jupyter/jupyter_notebook_config.py'
+        $DAEMON stop
+        $DAEMON $DAEMON_ARGS
     ;;
     *)
         echo "jupyter-notebook {start|stop|restart}"
