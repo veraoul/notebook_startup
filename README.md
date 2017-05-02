@@ -10,6 +10,6 @@ Test that it all works:
     /etc/init.d/jupyter-notebook restart
     /etc/init.d/jupyter-notebook stop
 
-Add **node-app** to the default runlevels:
+Add **jupyter-notebook** to the default runlevels:
 
     update-rc.d jupyter-notebook defaults
